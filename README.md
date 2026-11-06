@@ -1,6 +1,6 @@
-# Clothing Store
+# Clothing & Beauty Store
 
-Zero-subscription-cost MVP: FastAPI + SQLite locally (PostgreSQL-ready) + vanilla HTML/CSS/JS. Multiple images per product, inventory dashboard, storefront, and contact inquiries. No AI APIs or paid services required.
+Clothing and beauty accessories storefront. Zero-subscription-cost MVP: FastAPI + SQLite locally (PostgreSQL-ready) + vanilla HTML/CSS/JS. Multiple images per clothing or beauty accessory product, inventory dashboard, storefront, and contact inquiries. No cart or online checkout. No AI APIs or paid services required.
 
 ## Run locally
 1. `python -m venv .venv` and activate it.
