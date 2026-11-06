@@ -1,6 +1,6 @@
-# AI Clothing Store
+# Clothing Store
 
-Zero-subscription-cost MVP: FastAPI + SQLite locally (PostgreSQL-ready) + vanilla HTML/CSS/JS. Multiple images per product, inventory dashboard, storefront, and contact inquiries. No paid AI calls.
+Zero-subscription-cost MVP: FastAPI + SQLite locally (PostgreSQL-ready) + vanilla HTML/CSS/JS. Multiple images per product, inventory dashboard, storefront, and contact inquiries. No AI APIs or paid services required.
 
 ## Run locally
 1. `python -m venv .venv` and activate it.
@@ -10,7 +10,7 @@ Zero-subscription-cost MVP: FastAPI + SQLite locally (PostgreSQL-ready) + vanill
 
 Data is stored in `store.db`; photos in `uploads/`. Both are ignored by git. Change `DATABASE_URL` to a PostgreSQL SQLAlchemy URL later (install psycopg). Do not expose this server publicly until authentication, authorization, file security and persistent hosting are configured. The admin dashboard is **local-development only**, with no authentication.
 
-The AI button is deliberately not implemented: no OpenAI API charges. Product images are original uploads only.
+Product images are original uploads only. There is no AI integration or external image-generation API.
 
 ## Future
-Secure authentication, cloud image storage, PostgreSQL hosting, image-generation approval workflow, seller accounts, pagination and deployment.
+Secure authentication, cloud image storage, PostgreSQL hosting, seller accounts, pagination and deployment.
