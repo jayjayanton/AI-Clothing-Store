@@ -27,3 +27,7 @@
 .women-gallery button.active{background:#922d5c;color:#fff}
 @media(max-width:650px){.women-card{flex-basis:82%}}
 @media(prefers-reduced-motion:reduce){.women-grid{scroll-behavior:auto}.women-photo img{transition:none}}
+
+/* One-off purchase request dialog */
+.women-inquiry{width:100%;margin-top:13px;border:0;border-radius:8px;background:#263c2e;color:#fff;padding:12px 10px;font-weight:700;cursor:pointer}.women-inquiry:hover{background:#3e5a45}
+.purchase-dialog{border:1px solid #e5e1df;border-radius:16px;padding:24px;width:min(92vw,520px);box-shadow:0 16px 70px #0003;color:#26362b}.purchase-dialog::backdrop{background:#141a18a8}.purchase-dialog h2{margin-top:0}.purchase-dialog p{line-height:1.5}.purchase-dialog textarea{width:100%;padding:12px;border:1px solid #b8c1b7;border-radius:8px;font:inherit;resize:vertical}.purchase-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.purchase-actions button,.purchase-actions a{border:1px solid #263c2e;border-radius:8px;padding:10px 13px;background:#263c2e;color:#fff;text-decoration:none;cursor:pointer;font:inherit}.purchase-actions button:last-child{background:#fff;color:#263c2e}
