@@ -15,7 +15,14 @@ function renderWomen(filter='all'){
   const heading=document.createElement('h3');heading.textContent=p.name;info.append(heading);
   const meta=document.createElement('p');meta.textContent=p.brand+' · Size '+p.size+' · '+p.color;info.append(meta);
   const price=document.createElement('p');price.className='women-price';price.textContent='Precio por confirmar / Price pending';info.append(price);
-  const gallery=document.createElement('div');gallery.className='women-gallery';p.ids.forEach((id,i)=>{const a=document.createElement('a');a.href=driveLink(id);a.target='_blank';a.rel='noopener noreferrer';a.textContent=viewLabels[i];gallery.append(a)});info.append(gallery);card.append(photo,info);womenGrid.append(card);
+  const gallery=document.createElement('div');gallery.className='women-gallery';
+  let selected=0;const updateSlide=()=>{img.src=thumb(p.ids[selected]);img.alt=p.name+' — '+viewLabels[selected];photo.href=driveLink(p.ids[selected]);photo.setAttribute('aria-label','Open '+viewLabels[selected]+' in Google Drive');gallery.querySelectorAll('button').forEach((b,i)=>{b.classList.toggle('active',i===selected);b.setAttribute('aria-pressed',String(i===selected))})};
+  p.ids.forEach((id,i)=>{const b=document.createElement('button');b.type='button';b.textContent=viewLabels[i];b.addEventListener('click',()=>{selected=i;updateSlide()});gallery.append(b)});
+  const controls=document.createElement('div');controls.className='women-slide-controls';
+  const prev=document.createElement('button');prev.type='button';prev.textContent='‹';prev.setAttribute('aria-label','Previous image');
+  const next=document.createElement('button');next.type='button';next.textContent='›';next.setAttribute('aria-label','Next image');
+  prev.addEventListener('click',()=>{selected=(selected+3)%4;updateSlide()});next.addEventListener('click',()=>{selected=(selected+1)%4;updateSlide()});controls.append(prev,next);
+  photo.after(controls);info.append(gallery);card.append(info);womenGrid.append(card);updateSlide();
  });
 }
 document.querySelectorAll('[data-women-filter]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-women-filter]').forEach(x=>x.classList.toggle('active',x===b));renderWomen(b.dataset.womenFilter)}));
