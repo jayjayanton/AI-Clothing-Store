@@ -17,7 +17,7 @@ const grid=document.querySelector('#women-product-grid');let currentFilter='all'
 function renderWomen(){if(!grid)return;grid.replaceChildren();for(const p of womensProducts.filter(p=>currentFilter==='all'||p.category===currentFilter)){
  const card=document.createElement('article');card.className='women-card';card.dataset.category=p.category;
  const photo=document.createElement('a');photo.className='women-photo';photo.target='_blank';photo.rel='noopener noreferrer';const img=document.createElement('img');img.loading='lazy';photo.append(img);
- const info=document.createElement('div');info.className='women-info';const h=document.createElement('h3');h.textContent=p.name;const meta=document.createElement('p');meta.textContent=[p.brand,'Size '+p.size,p.color].filter(Boolean).join(' · ');const price=document.createElement('p');price.className='women-price';price.textContent='Precio por confirmar / Price pending';info.append(h,meta,price);
+ const info=document.createElement('div');info.className='women-info';const h=document.createElement('h3');h.textContent=p.name;const meta=document.createElement('p');meta.textContent=[p.brand,'Size '+p.size,p.color].filter(Boolean).join(' · ');const price=document.createElement('p');price.className='women-price';price.textContent='Precio por confirmar / Price pending';info.append(h,meta,price);const inquiry=document.createElement('button');inquiry.type='button';inquiry.className='women-inquiry';inquiry.textContent='Solicitar compra / Request to buy';inquiry.addEventListener('click',()=>openPurchaseRequest(p));info.append(inquiry);
  const gallery=document.createElement('div');gallery.className='women-gallery';const available=views.map((v,i)=>resolveImage(p,i));let selected=available.findIndex(Boolean);if(selected<0)continue;
  const buttons=views.map((v,i)=>{const b=document.createElement('button');b.type='button';b.textContent=labels[i];b.disabled=!available[i];b.addEventListener('click',()=>{selected=i;update()});gallery.append(b);return b});
  const update=()=>{const item=available[selected];if(!item)return;img.style.display='block';img.src=item.src;img.alt=p.name+' — '+labels[selected]+(item.placeholder?' (placeholder; photo coming soon)':'');photo.href=item.href;photo.setAttribute('aria-label','Open '+labels[selected]);buttons.forEach((b,i)=>{b.classList.toggle('active',i===selected);b.setAttribute('aria-pressed',String(i===selected))})};
@@ -27,3 +27,24 @@ function renderWomen(){if(!grid)return;grid.replaceChildren();for(const p of wom
 document.querySelectorAll('[data-women-filter]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-women-filter]').forEach(x=>x.classList.toggle('active',x===b));currentFilter=b.dataset.womenFilter;renderWomen()}));
 renderWomen();
 fetch(apiUrl,{headers:{Accept:'application/vnd.github+json'}}).then(r=>{if(!r.ok)throw new Error('GitHub folder listing unavailable');return r.json()}).then(files=>{for(const f of files){if(f.type==='file'&&f.name.toLowerCase().endsWith('.png'))imageFiles.set(f.name.toLowerCase(),f.name)}addDiscoveredProducts();renderWomen()}).catch(e=>console.warn('Using catalog fallbacks:',e.message));
+
+// One-off garment purchase requests. No card data or payment credentials on GitHub Pages.
+// The seller confirms availability and sends a PayPhone payment link manually.
+const purchaseConfig={sellerWhatsApp:'',sellerEmail:''}; // Set these only when ready to receive orders.
+function openPurchaseRequest(product){
+ const item=[product.brand,product.name,'Size '+product.size,product.color].filter(Boolean).join(' · ');
+ const message='Hola, quisiera comprar esta prenda: '+item+'. ¿Sigue disponible? Por favor confirme el precio total y envíeme un enlace de pago seguro de PayPhone. Gracias.';
+ let dialog=document.querySelector('#purchase-request-dialog');
+ if(!dialog){dialog=document.createElement('dialog');dialog.id='purchase-request-dialog';dialog.className='purchase-dialog';document.body.append(dialog)}
+ dialog.replaceChildren();
+ const title=document.createElement('h2');title.textContent='Solicitar compra / Request to buy';
+ const detail=document.createElement('p');detail.textContent=item;
+ const note=document.createElement('p');note.textContent='Esta solicitud no es un pago ni reserva. Confirmaremos precio y disponibilidad antes de enviar un enlace seguro de PayPhone. No ingreses datos de tarjeta aquí.';
+ const textarea=document.createElement('textarea');textarea.value=message;textarea.rows=5;textarea.setAttribute('aria-label','Mensaje de solicitud');
+ const actions=document.createElement('div');actions.className='purchase-actions';
+ const copy=document.createElement('button');copy.type='button';copy.textContent='Copiar solicitud / Copy request';copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(textarea.value);copy.textContent='Copiado / Copied'}catch{textarea.focus();textarea.select();copy.textContent='Selecciona y copia el texto'}});actions.append(copy);
+ if(purchaseConfig.sellerWhatsApp){const link=document.createElement('a');link.textContent='Enviar por WhatsApp';link.target='_blank';link.rel='noopener noreferrer';link.href='https://wa.me/'+purchaseConfig.sellerWhatsApp.replace(/\\D/g,'')+'?text='+encodeURIComponent(textarea.value);link.addEventListener('click',()=>{link.href='https://wa.me/'+purchaseConfig.sellerWhatsApp.replace(/\\D/g,'')+'?text='+encodeURIComponent(textarea.value)});actions.append(link)}
+ if(purchaseConfig.sellerEmail){const link=document.createElement('a');link.textContent='Enviar por correo';link.href='mailto:'+purchaseConfig.sellerEmail+'?subject='+encodeURIComponent('Solicitud de compra: '+product.name)+'&body='+encodeURIComponent(textarea.value);link.addEventListener('click',()=>{link.href='mailto:'+purchaseConfig.sellerEmail+'?subject='+encodeURIComponent('Solicitud de compra: '+product.name)+'&body='+encodeURIComponent(textarea.value)});actions.append(link)}
+ const close=document.createElement('button');close.type='button';close.textContent='Cerrar / Close';close.addEventListener('click',()=>dialog.close());actions.append(close);
+ dialog.append(title,detail,note,textarea,actions);dialog.showModal();
+}
