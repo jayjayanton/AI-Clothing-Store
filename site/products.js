@@ -8,11 +8,11 @@ const labels=['Collage','Front / Frente','Back / Espalda','Side / Lado'];
 const drive=id=>'https://drive.google.com/file/d/'+id+'/view';
 const thumb=id=>'https://drive.google.com/thumbnail?id='+id+'&sz=w1000';
 const localPath=name=>assetFolder+encodeURIComponent(name);
-const imageFiles=new Set();
+const imageFiles=new Map();
 const categoryFor=prefix=>/skirt|falda/.test(prefix)?'skirts':/tshirt|t_shirt|camiseta/.test(prefix)?'tshirts':/dress|vestido/.test(prefix)?'dresses':/pants|pantalon/.test(prefix)?'pants':'tops';
-function resolveImage(p,i){const name=p.filePrefix+'_'+views[i]+'.png';if(imageFiles.has(name))return {src:localPath(name),href:localPath(name),local:true};const id=p.ids?.[i];return id?{src:thumb(id),href:drive(id),local:false}:null}
-function addDiscoveredProducts(){const known=new Set(womensProducts.map(p=>p.filePrefix));const groups=new Map();for(const name of imageFiles){const match=name.match(/^(.+)_(collage|front|back|side)\.png$/i);if(!match)continue;const prefix=match[1];if(!groups.has(prefix))groups.set(prefix,new Set());groups.get(prefix).add(match[2].toLowerCase())}
- for(const [prefix,available] of groups){if(known.has(prefix)||!available.has('collage'))continue;const parts=prefix.split('_');const size=parts[parts.length-1].toUpperCase();const category=categoryFor(prefix);const title=parts.slice(0,-1).join(' ').replace(/\b\w/g,c=>c.toUpperCase());womensProducts.push({name:title,brand:parts[0].toUpperCase(),category,size,color:'',filePrefix:prefix,ids:[]})}}
+function resolveImage(p,i){const name=p.filePrefix+'_'+views[i]+'.png';if(imageFiles.has(name.toLowerCase())){const actual=imageFiles.get(name.toLowerCase());return {src:localPath(actual),href:localPath(actual),local:true}}const id=p.ids?.[i];return id?{src:thumb(id),href:drive(id),local:false}:null}
+function addDiscoveredProducts(){const known=new Set(womensProducts.map(p=>p.filePrefix.toLowerCase()));const groups=new Map();for(const name of imageFiles.values()){const match=name.match(/^(.+)_(collage|front|back|side)\.png$/i);if(!match)continue;const prefix=match[1];if(!groups.has(prefix))groups.set(prefix,new Set());groups.get(prefix).add(match[2].toLowerCase())}
+ for(const [prefix,available] of groups){if(known.has(prefix.toLowerCase())||!available.has('collage'))continue;const parts=prefix.split('_');const size=parts[parts.length-1].toUpperCase();const category=categoryFor(prefix);const title=parts.slice(0,-1).join(' ').replace(/\b\w/g,c=>c.toUpperCase());womensProducts.push({name:title,brand:parts[0].toUpperCase(),category,size,color:'',filePrefix:prefix,ids:[]})}}
 const grid=document.querySelector('#women-product-grid');let currentFilter='all';
 function renderWomen(){if(!grid)return;grid.replaceChildren();for(const p of womensProducts.filter(p=>currentFilter==='all'||p.category===currentFilter)){
  const card=document.createElement('article');card.className='women-card';card.dataset.category=p.category;
@@ -26,4 +26,4 @@ function renderWomen(){if(!grid)return;grid.replaceChildren();for(const p of wom
  card.append(photo,controls);info.append(gallery);card.append(info);grid.append(card);update();}}
 document.querySelectorAll('[data-women-filter]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-women-filter]').forEach(x=>x.classList.toggle('active',x===b));currentFilter=b.dataset.womenFilter;renderWomen()}));
 renderWomen();
-fetch(apiUrl,{headers:{Accept:'application/vnd.github+json'}}).then(r=>{if(!r.ok)throw new Error('GitHub folder listing unavailable');return r.json()}).then(files=>{for(const f of files){if(f.type==='file'&&f.name.toLowerCase().endsWith('.png'))imageFiles.add(f.name)}addDiscoveredProducts();renderWomen()}).catch(e=>console.warn('Using catalog fallbacks:',e.message));
+fetch(apiUrl,{headers:{Accept:'application/vnd.github+json'}}).then(r=>{if(!r.ok)throw new Error('GitHub folder listing unavailable');return r.json()}).then(files=>{for(const f of files){if(f.type==='file'&&f.name.toLowerCase().endsWith('.png'))imageFiles.set(f.name.toLowerCase(),f.name)}addDiscoveredProducts();renderWomen()}).catch(e=>console.warn('Using catalog fallbacks:',e.message));
