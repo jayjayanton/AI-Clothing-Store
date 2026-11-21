@@ -30,3 +30,6 @@ In `site/products.js`, set `purchaseConfig.sellerWhatsApp` to an approved busine
 
 ### Future automation (not yet implemented)
 A secure backend can track item statuses `available → held → sold`, hold expiration, authenticated admin updates, and verified provider payment callbacks/webhooks. Never embed payment API secrets or trust client-side payment confirmations on GitHub Pages. No PayPhone integration or automatic sold-out updates are currently active.
+
+## Beauty accessory photography
+For branded beauty accessories such as makeup cases, lead with a collage of the item and a legible close-up of its own brand label. Keep the individual product views in the gallery.

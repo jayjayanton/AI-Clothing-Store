@@ -9,8 +9,9 @@ const caseCopy = {
     description: 'Estuche negro de exterior acanalado con asa, cierre y una rosa de tela en el frente. El interior tiene forro rojo y un bolsillo fruncido. Se vende vacío.',
     price: 'Precio por confirmar', inquiry: 'Solicitar compra',
     photoNote: 'Fotos editadas con IA a partir de las imágenes del estuche.',
-    front: 'Frente', top: 'Desde arriba', interior: 'Interior y etiqueta', views: 'Vistas del estuche',
+    collage: 'Collage', front: 'Frente', top: 'Desde arriba', interior: 'Interior y etiqueta', views: 'Vistas del estuche',
     alt: {
+      collage: 'Estuche Lancôme de frente, desde arriba y con detalle de la etiqueta interior',
       front: 'Estuche Lancôme cerrado, con cierre y rosa de tela en el frente',
       top: 'Vista superior de la tapa acanalada y el asa del estuche Lancôme',
       interior: 'Forro rojo, bolsillo fruncido y etiqueta Lancôme Paris dentro del estuche'
@@ -21,8 +22,9 @@ const caseCopy = {
     description: 'Black ribbed makeup case with a carrying handle, zip closure and a fabric rose on the front. The red lining has a gathered pocket. Sold empty.',
     price: 'Price pending', inquiry: 'Request to buy',
     photoNote: 'Catalog photos edited with AI from photos of this case.',
-    front: 'Front', top: 'From above', interior: 'Interior and label', views: 'Case views',
+    collage: 'Collage', front: 'Front', top: 'From above', interior: 'Interior and label', views: 'Case views',
     alt: {
+      collage: 'Lancôme case from the front and above with a close-up of the interior brand label',
       front: 'Closed Lancôme case with zipper and fabric rose on the front',
       top: 'Overhead view of the ribbed lid and handle of the Lancôme case',
       interior: 'Red lining, gathered pocket and Lancôme Paris label inside the case'
