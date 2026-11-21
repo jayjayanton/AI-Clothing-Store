@@ -63,3 +63,55 @@
 .case-price { font-weight: 700; }
 .case-info .women-inquiry { width: auto; margin: 0; padding-inline: 1.5rem; font-size: 1rem; }
 @media (max-width: 700px) { .beauty-product { grid-template-columns: minmax(0, 1fr); } }
+
+/* Trama & Charol storefront */
+:root { --ink:#2c2024; --wine:#652637; --paper:#faf8f4; --rule:#dcd4ce; --serif:Georgia,'Times New Roman',serif; }
+body {background:var(--paper);color:var(--ink)}
+[hidden] {display:none!important}
+header, footer {padding:1.2rem max(5vw,calc((100vw - 1320px)/2));background:var(--paper);border-bottom:1px solid var(--rule)}
+.brand,footer .brand {font:normal clamp(1.65rem,3.3vw,2.6rem)/1.1 var(--serif);letter-spacing:-.065em;color:var(--ink);white-space:nowrap}
+.brand i {font-weight:normal;color:var(--wine)}
+.nav-actions a,footer a {font-size:.92rem;color:inherit;text-decoration:none}
+.nav-actions a:hover,footer a:hover {text-decoration:underline}
+.nav-actions {gap:clamp(.75rem,2vw,2rem)}
+#language-toggle {color:var(--ink);border-radius:2px}
+.hero {display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);min-height:0;max-width:1440px;margin:auto;background:#f0eae4}
+.hero-inner {padding:clamp(2rem,5vw,6rem);align-self:center}
+.hero h1 {font:normal clamp(2.7rem,5.5vw,5.7rem)/1.02 var(--serif);letter-spacing:-.065em;margin:0}
+.hero h1 em {color:var(--wine)}
+.hero-inner>p:not(.eyebrow) {font-size:1rem;line-height:1.65;color:#594c50;max-width:34rem;margin:1.5rem 0}
+.cta,.women-inquiry {background:var(--wine);color:#fff;border-radius:3px;font-size:.95rem}
+.cta {margin:0;align-items:center}
+.editorial {position:relative;margin:0;min-height:300px}
+.editorial img {width:100%;height:100%;position:absolute;inset:0;object-fit:cover}
+.editorial figcaption {position:absolute;bottom:1rem;left:1rem;margin:0;background:var(--paper);padding:.42rem .7rem;color:var(--ink);font-size:.8rem}
+main {padding:clamp(2rem,5vw,4.5rem) 5vw;max-width:1440px}
+.catalog-bar {display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;border-bottom:1px solid var(--rule);padding-bottom:1.3rem}
+main h2 {font:normal clamp(1.9rem,3.2vw,3.2rem)/1.1 var(--serif);letter-spacing:-.04em;margin:0}
+.categories,.women-filters {margin:0;gap:.5rem}
+.categories button,.women-filters button,.case-views a {font-size:.92rem;color:var(--ink);border-color:var(--rule)}
+.categories button.active,.women-filters button.active,.case-views a[aria-current=true],.women-gallery button.active {background:var(--wine);color:white;border-color:var(--wine)}
+.women-products {padding:2rem 0}
+.women-filters {margin:1rem 0}
+.women-card,.beauty-product {border:1px solid var(--rule);border-radius:5px;box-shadow:none}
+.women-card {flex-basis:clamp(260px,29%,350px)}
+.women-gallery button {font-size:.85rem}
+.beauty-heading {padding-top:1.3rem}
+.beauty-product {margin:1.4rem 0;gap:clamp(1rem,4vw,4rem)}
+.case-info h2 {font-family:var(--serif);font-weight:normal}
+.case-info .eyebrow {color:var(--wine)}
+#purchase-guide {display:grid;grid-template-columns:1fr 1.5fr;align-items:center;gap:2rem;border-top:1px solid var(--rule);padding:2.5rem 0 0;margin-top:3rem}
+#purchase-guide p {line-height:1.65;max-width:40rem}
+footer {border-top:1px solid var(--rule);color:var(--ink);display:flex;align-items:center;flex-wrap:wrap}
+footer .brand {margin-right:auto}
+@media(max-width:700px){
+ header {padding:.95rem 4vw;flex-wrap:wrap;gap:.65rem}
+ .nav-actions a {font-size:.85rem}
+ .hero {grid-template-columns:1fr}
+ .hero-inner {padding:2rem 5vw}
+ .hero h1 {font-size:clamp(2.8rem,8.7vw,3.65rem)}
+ .editorial {min-height:0;aspect-ratio:1.8}
+ .women-card {flex-basis:82%}
+ #purchase-guide {grid-template-columns:1fr;gap:.5rem}
+ footer {gap:1rem}
+}
