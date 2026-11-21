@@ -49,8 +49,8 @@
   scroll-margin-top: 1rem;
 }
 .beauty-product[hidden] { display: none; }
-#case-full-photo { display: block; }
-#case-photo { display: block; width: 100%; aspect-ratio: 4/3; object-fit: contain; }
+.case-gallery > a { display: block; }
+.case-gallery img { display: block; width: 100%; aspect-ratio: 4/3; object-fit: contain; }
 .case-views { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .75rem; }
 .case-views a { padding: .7rem .85rem; color: #263c2e; border: 1px solid #cbd0c5; border-radius: 8px; text-decoration: none; font-size: .9rem; }
 .case-views a[aria-current="true"] { background: #263c2e; color: white; }

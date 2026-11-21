@@ -50,6 +50,8 @@ function openPurchaseRequest(product){
  dialog.append(title,detail,note,textarea,actions);dialog.showModal();
 }
 
-document.querySelector('#case-inquiry')?.addEventListener('click', () => {
-  openPurchaseRequest({name: document.querySelector('#case-name').textContent});
+document.querySelectorAll('.beauty-product').forEach(section => {
+  section.querySelector('.women-inquiry').addEventListener('click', () => {
+    openPurchaseRequest({name: section.querySelector('h2').textContent});
+  });
 });

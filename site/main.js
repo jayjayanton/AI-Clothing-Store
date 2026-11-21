@@ -31,30 +31,45 @@ const caseCopy = {
     }
   }
 };
-const casePhoto = document.querySelector('#case-photo');
-const caseViews = document.querySelectorAll('[data-case-view]');
-function selectCaseView(link) {
-  casePhoto.src = link.href;
-  casePhoto.alt = caseCopy[lang].alt[link.dataset.caseView];
-  document.querySelector('#case-full-photo').href = link.href;
-  for (const view of caseViews) {
-    if (view === link) view.setAttribute('aria-current', 'true');
-    else view.removeAttribute('aria-current');
+const redTrimCopy = {
+  es: {
+    name: 'Estuche Lancôme con ribete rojo',
+    description: 'Estuche negro con motivos tejidos, ribete rojo y dos tiradores en forma de torre Eiffel. El interior rojo tiene un bolsillo fruncido y una etiqueta que dice «Designed Exclusively For Lancôme».',
+    base: 'Base', reverse: 'Reverso',
+    alt: {collage: 'Estuche con ribete rojo, tiradores de torre Eiffel y etiqueta interior', front: 'Frente con dos tiradores de torre Eiffel', top: 'Tapa estampada con asa negra y costuras rojas', interior: 'Forro rojo, bolsillo y etiqueta diseñada para Lancôme', base: 'Base estampada con borde rojo', reverse: 'Cara posterior con cierre rojo'}
+  },
+  en: {
+    name: 'Lancôme Red-Trim Makeup Case',
+    description: 'Black patterned case with red piping and two Eiffel Tower zipper pulls. The red lining has a gathered pocket and a label reading “Designed Exclusively For Lancôme”.',
+    base: 'Base', reverse: 'Back',
+    alt: {collage: 'Red-trim case, Eiffel Tower pulls and interior brand label', front: 'Front with two Eiffel Tower zipper pulls', top: 'Patterned lid with black handle and red stitching', interior: 'Red lining, pocket and Designed Exclusively For Lancôme label', base: 'Patterned base with red piping', reverse: 'Rear face with red zipper'}
+  }
+};
+const caseSections = document.querySelectorAll('.beauty-product');
+function galleryCopy(section, language) {
+  return section.id === 'lancome-ribete-rojo' ? {...caseCopy[language], ...redTrimCopy[language]} : caseCopy[language];
+}
+function translateCase(language) {
+  for (const section of caseSections) {
+    const copy = galleryCopy(section, language);
+    section.querySelectorAll('[data-case-copy]').forEach(el => { el.textContent = copy[el.dataset.caseCopy]; });
+    section.querySelector('.case-views').setAttribute('aria-label', copy.views);
+    const current = section.querySelector('[data-case-view][aria-current]');
+    section.querySelector('.case-gallery img').alt = copy.alt[current.dataset.caseView];
   }
 }
-caseViews.forEach(view => view.addEventListener('click', event => {
-  if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
-  event.preventDefault();
-  selectCaseView(view);
-}));
-function translateCase(language) {
-  const copy = caseCopy[language];
-  document.querySelectorAll('[data-case-copy]').forEach(el => { el.textContent = copy[el.dataset.caseCopy]; });
-  const current = document.querySelector('[data-case-view][aria-current="true"]');
-  if (current) {
-    current.parentElement.setAttribute('aria-label', copy.views);
-    casePhoto.alt = copy.alt[current.dataset.caseView];
-  }
+for (const section of caseSections) {
+  const links = section.querySelectorAll('[data-case-view]');
+  links.forEach(link => link.addEventListener('click', event => {
+    if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    const image = section.querySelector('.case-gallery img');
+    image.src = link.href;
+    image.alt = galleryCopy(section, lang).alt[link.dataset.caseView];
+    image.parentElement.href = link.href;
+    links.forEach(view => view.removeAttribute('aria-current'));
+    link.setAttribute('aria-current', 'true');
+  }));
 }
 function setLanguage(lang){translateCase(lang);const strings=translations[lang];for(const [key,selector] of Object.entries(bindings)){const el=document.querySelector(selector);if(el)el.innerHTML=strings[key]}document.documentElement.lang=lang;document.querySelector('#language-toggle').textContent=lang==='es'?'EN':'ES';document.querySelector('#language-toggle').setAttribute('aria-label',lang==='es'?'Switch language to English':'Cambiar idioma a español');try{localStorage.setItem('store-language',lang)}catch{}}
 let lang='es';try{lang=localStorage.getItem('store-language')||'es'}catch{}if(!translations[lang])lang='es';setLanguage(lang);document.querySelector('#language-toggle').addEventListener('click',()=>{lang=lang==='es'?'en':'es';setLanguage(lang)});
