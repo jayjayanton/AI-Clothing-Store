@@ -54,6 +54,8 @@ function galleryCopy(section, language) {
 function translateCase(language) {
   for (const section of caseSections) {
     const copy = galleryCopy(section, language);
+    section.querySelector('[data-step="-1"]').ariaLabel = language === 'es' ? 'Foto anterior' : 'Previous photo';
+    section.querySelector('[data-step="1"]').ariaLabel = language === 'es' ? 'Foto siguiente' : 'Next photo';
     section.querySelectorAll('[data-case-copy]').forEach(el => { el.textContent = copy[el.dataset.caseCopy]; });
     section.querySelector('.case-views').setAttribute('aria-label', copy.views);
     const current = section.querySelector('[data-case-view][aria-current]');
@@ -61,7 +63,30 @@ function translateCase(language) {
   }
 }
 for (const section of caseSections) {
-  const links = section.querySelectorAll('[data-case-view]');
+  const links = Array.from(section.querySelectorAll('[data-case-view]'));
+  function advance(step) {
+    const index = links.findIndex(link => link.hasAttribute('aria-current'));
+    links[(index + step + links.length) % links.length].click();
+  }
+  section.querySelectorAll('[data-step]').forEach(button => {
+    button.addEventListener('click', () => advance(Number(button.dataset.step)));
+  });
+  const photo = section.querySelector('.case-stage > a');
+  let start;
+  photo.addEventListener('touchstart', event => {
+    start = event.touches.length === 1 ? event.touches[0] : null;
+  }, {passive: true});
+  photo.addEventListener('touchcancel', () => { start = null; });
+  photo.addEventListener('touchend', event => {
+    const origin = start;
+    start = null;
+    if (!origin || event.touches.length) return;
+    const end = event.changedTouches[0];
+    const dx = end.clientX - origin.clientX;
+    if (Math.abs(dx) < 40 || Math.abs(dx) < 1.3 * Math.abs(end.clientY - origin.clientY)) return;
+    event.preventDefault();
+    advance(dx < 0 ? 1 : -1);
+  }, {passive: false});
   links.forEach(link => link.addEventListener('click', event => {
     if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
