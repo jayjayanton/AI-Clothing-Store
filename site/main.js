@@ -7,7 +7,7 @@ const caseCopy = {
   es: {
     name: 'Estuche de maquillaje Lancôme', condition: 'Nuevo, sin uso',
     description: 'Estuche negro de exterior acanalado con asa, cierre y una rosa de tela en el frente. El interior tiene forro rojo y un bolsillo fruncido. Se vende vacío.',
-    price: 'Precio por confirmar', inquiry: 'Solicitar compra',
+    price: 'US$26', inquiry: 'Solicitar compra',
     photoNote: 'Fotos editadas con IA a partir de las imágenes del estuche.',
     collage: 'Collage', front: 'Frente', top: 'Desde arriba', interior: 'Interior y etiqueta', views: 'Vistas del estuche',
     alt: {
@@ -20,7 +20,7 @@ const caseCopy = {
   en: {
     name: 'Lancôme Makeup Case', condition: 'New, unused',
     description: 'Black ribbed makeup case with a carrying handle, zip closure and a fabric rose on the front. The red lining has a gathered pocket. Sold empty.',
-    price: 'Price pending', inquiry: 'Request to buy',
+    price: 'US$26', inquiry: 'Request to buy',
     photoNote: 'Catalog photos edited with AI from photos of this case.',
     collage: 'Collage', front: 'Front', top: 'From above', interior: 'Interior and label', views: 'Case views',
     alt: {
@@ -34,12 +34,14 @@ const caseCopy = {
 const redTrimCopy = {
   es: {
     name: 'Estuche Lancôme con ribete rojo',
+    price: 'US$28',
     description: 'Estuche negro con motivos tejidos, ribete rojo y dos tiradores en forma de torre Eiffel. El interior rojo tiene un bolsillo fruncido y una etiqueta que dice «Designed Exclusively For Lancôme».',
     base: 'Base', reverse: 'Reverso',
     alt: {collage: 'Estuche con ribete rojo, tiradores de torre Eiffel y etiqueta interior', front: 'Frente con cierre rojo continuo', top: 'Tapa estampada con asa negra y costuras rojas', interior: 'Forro rojo, bolsillo y etiqueta diseñada para Lancôme', base: 'Base estampada con borde rojo', reverse: 'Reverso con dos tiradores de torre Eiffel'}
   },
   en: {
     name: 'Lancôme Red-Trim Makeup Case',
+    price: 'US$28',
     description: 'Black patterned case with red piping and two Eiffel Tower zipper pulls. The red lining has a gathered pocket and a label reading “Designed Exclusively For Lancôme”.',
     base: 'Base', reverse: 'Back',
     alt: {collage: 'Red-trim case, Eiffel Tower pulls and interior brand label', front: 'Front with continuous red zipper', top: 'Patterned lid with black handle and red stitching', interior: 'Red lining, pocket and Designed Exclusively For Lancôme label', base: 'Patterned base with red piping', reverse: 'Back with two Eiffel Tower zipper pulls'}
