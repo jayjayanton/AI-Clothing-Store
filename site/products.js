@@ -32,8 +32,9 @@ fetch(apiUrl,{headers:{Accept:'application/vnd.github+json'}}).then(r=>{if(!r.ok
 // The seller confirms availability and sends a PayPhone payment link manually.
 const purchaseConfig={sellerWhatsApp:'',sellerEmail:''}; // Set these only when ready to receive orders.
 function openPurchaseRequest(product){
- const item=[product.brand,product.name,'Size '+product.size,product.color].filter(Boolean).join(' · ');
- const message='Hola, quisiera comprar esta prenda: '+item+'. ¿Sigue disponible? Por favor confirme el precio total y envíeme un enlace de pago seguro de PayPhone. Gracias.';
+ const item=[product.brand,product.name,product.size && 'Size '+product.size,product.color].filter(Boolean).join(' · ');
+ const itemType=product.size?'esta prenda':'este artículo';
+ const message='Hola, quisiera comprar '+itemType+': '+item+'. ¿Sigue disponible? Por favor confirme el precio total y envíeme un enlace de pago seguro de PayPhone. Gracias.';
  let dialog=document.querySelector('#purchase-request-dialog');
  if(!dialog){dialog=document.createElement('dialog');dialog.id='purchase-request-dialog';dialog.className='purchase-dialog';document.body.append(dialog)}
  dialog.replaceChildren();
@@ -48,3 +49,7 @@ function openPurchaseRequest(product){
  const close=document.createElement('button');close.type='button';close.textContent='Cerrar / Close';close.addEventListener('click',()=>dialog.close());actions.append(close);
  dialog.append(title,detail,note,textarea,actions);dialog.showModal();
 }
+
+document.querySelector('#case-inquiry')?.addEventListener('click', () => {
+  openPurchaseRequest({name: document.querySelector('#case-name').textContent});
+});

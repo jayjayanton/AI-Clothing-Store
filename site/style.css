@@ -31,3 +31,31 @@
 /* One-off purchase request dialog */
 .women-inquiry{width:100%;margin-top:13px;border:0;border-radius:8px;background:#263c2e;color:#fff;padding:12px 10px;font-weight:700;cursor:pointer}.women-inquiry:hover{background:#3e5a45}
 .purchase-dialog{border:1px solid #e5e1df;border-radius:16px;padding:24px;width:min(92vw,520px);box-shadow:0 16px 70px #0003;color:#26362b}.purchase-dialog::backdrop{background:#141a18a8}.purchase-dialog h2{margin-top:0}.purchase-dialog p{line-height:1.5}.purchase-dialog textarea{width:100%;padding:12px;border:1px solid #b8c1b7;border-radius:8px;font:inherit;resize:vertical}.purchase-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.purchase-actions button,.purchase-actions a{border:1px solid #263c2e;border-radius:8px;padding:10px 13px;background:#263c2e;color:#fff;text-decoration:none;cursor:pointer;font:inherit}.purchase-actions button:last-child{background:#fff;color:#263c2e}
+
+.tile-image.case-cover { background: white; padding: 1rem; }
+.case-cover img { width: 100%; height: 100%; object-fit: contain; }
+.case-condition { font-weight: 600; }
+.beauty-category-link { color: inherit; text-underline-offset: .2em; }
+.beauty-product {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: clamp(1.25rem, 4vw, 3.5rem);
+  align-items: center;
+  padding: clamp(1rem, 3vw, 2.25rem);
+  margin: 2rem 0;
+  background: #fff;
+  border: 1px solid #e5e6df;
+  border-radius: 16px;
+  scroll-margin-top: 1rem;
+}
+.beauty-product[hidden] { display: none; }
+#case-full-photo { display: block; }
+#case-photo { display: block; width: 100%; aspect-ratio: 4/3; object-fit: contain; }
+.case-views { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .75rem; }
+.case-views a { padding: .7rem .85rem; color: #263c2e; border: 1px solid #cbd0c5; border-radius: 8px; text-decoration: none; font-size: .9rem; }
+.case-views a[aria-current="true"] { background: #263c2e; color: white; }
+.case-info h2 { font-size: clamp(1.8rem, 3.4vw, 3rem); margin: .5rem 0; letter-spacing: -.04em; }
+.case-info > p { line-height: 1.55; }
+.case-price { font-weight: 700; }
+.case-info .women-inquiry { width: auto; margin: 0; padding-inline: 1.5rem; font-size: 1rem; }
+@media (max-width: 700px) { .beauty-product { grid-template-columns: minmax(0, 1fr); } }
