@@ -31,5 +31,12 @@ In `site/products.js`, set `purchaseConfig.sellerWhatsApp` to an approved busine
 ### Future automation (not yet implemented)
 A secure backend can track item statuses `available → held → sold`, hold expiration, authenticated admin updates, and verified provider payment callbacks/webhooks. Never embed payment API secrets or trust client-side payment confirmations on GitHub Pages. No PayPhone integration or automatic sold-out updates are currently active.
 
-## Beauty accessory photography
-For branded beauty accessories such as makeup cases, lead with a collage of the item and a legible close-up of its own brand label. Keep the individual product views in the gallery.
+## Accessory and beauty product photography
+
+Lead accessory and beauty product galleries with a collage. For branded items, include a readable close-up of the product’s own label. After the collage, provide individually selectable photos in this order:
+
+1. Front view of the complete item.
+2. Top view.
+3. Interior view when the item opens and the inside helps shoppers see its lining, pockets, compartments or capacity.
+
+For individual beauty bottles, use the front-facing product photo. For a group of bottle variants, lead with a group collage and include a separate front photo of each variant.
