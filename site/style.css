@@ -115,3 +115,36 @@ footer .brand {margin-right:auto}
  #purchase-guide {grid-template-columns:1fr;gap:.5rem}
  footer {gap:1rem}
 }
+
+/* Menswear department */
+.mens-preview {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  background: #242d35;
+  color: #faf8f4;
+  margin: 2rem 0 3rem;
+  scroll-margin-top: 1rem;
+}
+.mens-copy { padding: clamp(1.75rem, 5vw, 4.5rem); }
+.mens-copy h2 { font-size:clamp(2.6rem, 5vw, 4.8rem); }
+.mens-status { font-size:.75rem; letter-spacing:.15em; text-transform:uppercase; margin:0 0 1.2rem; color:#dfcbb2; }
+.mens-copy > p:not(.mens-status) { line-height:1.6; color:#e3e1de; }
+.mens-copy a { display:inline-block; padding:.6rem 0; color:inherit; text-underline-offset:.35em; }
+.mens-pinstripe {
+  display:grid; place-items:center; overflow:hidden;
+  background:repeating-linear-gradient(104deg, transparent 0 11px, #ffffff23 11px 12px), #37434b;
+}
+.mens-pinstripe i { font:italic clamp(3.5rem,8vw,8rem)/1 var(--serif); color:#e5dccc; letter-spacing:-.09em; }
+.categories button { border-radius:2px; }
+.women-gallery button,.case-views a { background:#f6f3f0; color:var(--ink); border:1px solid var(--rule); border-radius:3px; }
+.women-slide-controls button,.case-stage button { width:44px;height:44px; color:var(--ink); border-color:var(--rule); box-shadow:none; }
+.women-info .women-price { color:var(--wine); }
+.women-info h3 { font:normal 1.35rem/1.2 var(--serif); }
+.women-inquiry:hover,.cta:hover { background:#491a27; }
+:focus-visible { outline:2px solid currentColor; outline-offset:3px; }
+@media (max-width:600px) {
+  .mens-preview { grid-template-columns:minmax(0,1fr) 17%; }
+  .mens-pinstripe i { display:none; }
+  header .nav-actions { flex-wrap:wrap; row-gap:.6rem; }
+}
+@media (prefers-reduced-motion:reduce) { html {scroll-behavior:auto} }

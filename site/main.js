@@ -8,20 +8,28 @@ filters.forEach(button => button.addEventListener('click', () => {
     section.hidden = button.dataset.filter !== 'all' && section.dataset.category !== button.dataset.filter;
   });
 }));
+document.querySelector('#mens-nav').addEventListener('click', () => {
+  document.querySelector('[data-filter="men"]').click();
+});
+document.querySelector('#current-collection').addEventListener('click', () => {
+  const all = document.querySelector('[data-filter="all"]');
+  all.click();
+  all.focus({preventScroll: true});
+});
 const translations = {
   "es": {
     "browse": "Colección",
     "how": "Cómo comprar",
-    "intro": "Una selección de tops, camisetas, faldas y estuches Lancôme. Explora cada pieza en detalle y consulta su disponibilidad.",
-    "headline": "Moda para mujer y hombre",
-    "accent": "y accesorios de belleza.",
+    "intro": "Descubre nuestra selección de ropa de mujer y estuches Lancôme. La colección de hombre llega próximamente.",
+    "headline": "Moda y",
+    "accent": "accesorios.",
     "explore": "Explorar la colección",
     "feature": "Top de lentejuelas 2b bebe y estuche Lancôme",
     "all": "Todo",
     "clothing": "Mujer",
     "men": "Hombre",
     "menswear": "Ropa de hombre",
-    "mensSoon": "La primera selección de hombre llega próximamente.",
+    "mensSoon": "Estamos preparando la primera selección de ropa de hombre.",
     "beauty": "Accesorios de belleza",
     "wear": "Ropa de mujer",
     "cases": "Estuches de maquillaje",
@@ -32,21 +40,23 @@ const translations = {
     "howText": "Abre la pieza que te interesa y selecciona «Solicitar compra». Copia la solicitud para compartirla con la tienda. El precio final y la disponibilidad se confirman antes del pago.",
     "back": "Volver a la colección",
     "importer": "Importador de imágenes",
-    "catalog": "Catálogo"
+    "catalog": "Catálogo",
+    "soon": "Próximamente",
+    "current": "Ver la colección disponible"
   },
   "en": {
     "browse": "Collection",
     "how": "How to buy",
-    "intro": "A selection of tops, tees, skirts and Lancôme makeup cases. Take a closer look at each piece and ask about availability.",
-    "headline": "Women’s and men’s clothing",
-    "accent": "and beauty accessories.",
+    "intro": "Discover our selection of womenswear and Lancôme makeup cases. Our first menswear collection is on its way.",
+    "headline": "Clothing &",
+    "accent": "accessories.",
     "explore": "Explore the collection",
     "feature": "2b bebe sequin top and Lancôme makeup case",
     "all": "All",
     "clothing": "Women",
     "men": "Men",
     "menswear": "Men’s clothing",
-    "mensSoon": "Our first menswear collection is coming soon.",
+    "mensSoon": "Our first selection of menswear is in the works.",
     "beauty": "Beauty accessories",
     "wear": "Women’s clothing",
     "cases": "Makeup cases",
@@ -57,7 +67,9 @@ const translations = {
     "howText": "Open an item and select “Request to buy.” Copy the request to share it with the shop. Final price and availability are confirmed before payment.",
     "back": "Back to collection",
     "importer": "Image importer",
-    "catalog": "Catalog"
+    "catalog": "Catalog",
+    "soon": "Coming soon",
+    "current": "Browse the current collection"
   }
 };
 const caseCopy = {
