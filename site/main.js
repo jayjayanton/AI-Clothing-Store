@@ -20,9 +20,9 @@ const translations = {
   "es": {
     "browse": "Colección",
     "how": "Cómo comprar",
-    "intro": "Ropa y accesorios nuevos. De cada diseño tenemos una sola unidad, salvo el estuche Lancôme con ribete rojo, del que hay dos.",
+    "intro": "Moda, fragancias y accesorios nuevos. Hay una unidad de cada artículo, salvo el estuche Lancôme con ribete rojo, del que tenemos dos.",
     "headline": "Moda y",
-    "accent": "accesorios.",
+    "accent": "belleza.",
     "explore": "Explorar la colección",
     "feature": "Top de lentejuelas 2b bebe y estuche Lancôme",
     "all": "Todo",
@@ -30,10 +30,10 @@ const translations = {
     "men": "Hombre",
     "menswear": "Ropa de hombre",
     "mensSoon": "Estamos preparando la primera selección de ropa de hombre.",
-    "beauty": "Accesorios de belleza",
+    "beauty": "Belleza",
     "wear": "Ropa de mujer",
     "garmentStock": "Nueva · 1 disponible",
-    "cases": "Estuches de maquillaje",
+    "cases": "Belleza y accesorios",
     "allStyles": "Todas",
     "tees": "Camisetas",
     "skirts": "Faldas",
@@ -43,14 +43,15 @@ const translations = {
     "importer": "Importador de imágenes",
     "catalog": "Catálogo",
     "soon": "Próximamente",
-    "current": "Ver la colección disponible"
+    "current": "Ver la colección disponible",
+    "beautyRange": "Splash corporales de Victoria’s Secret, bálsamos labiales y estuches de maquillaje Lancôme."
   },
   "en": {
     "browse": "Collection",
     "how": "How to buy",
-    "intro": "All clothing and accessories are new. We have one of each design, except for the red-trim Lancôme case, of which we have two.",
-    "headline": "Clothing &",
-    "accent": "accessories.",
+    "intro": "New clothing, fragrance and accessories. Each item is available as a single piece, except for the red-trim Lancôme case. We have two.",
+    "headline": "Fashion &",
+    "accent": "beauty.",
     "explore": "Explore the collection",
     "feature": "2b bebe sequin top and Lancôme makeup case",
     "all": "All",
@@ -58,10 +59,10 @@ const translations = {
     "men": "Men",
     "menswear": "Men’s clothing",
     "mensSoon": "Our first selection of menswear is in the works.",
-    "beauty": "Beauty accessories",
+    "beauty": "Beauty",
     "wear": "Women’s clothing",
     "garmentStock": "New · 1 available",
-    "cases": "Makeup cases",
+    "cases": "Beauty & accessories",
     "allStyles": "All",
     "tees": "T-shirts",
     "skirts": "Skirts",
@@ -71,7 +72,8 @@ const translations = {
     "importer": "Image importer",
     "catalog": "Catalog",
     "soon": "Coming soon",
-    "current": "Browse the current collection"
+    "current": "Browse the current collection",
+    "beautyRange": "Victoria’s Secret body mists, lip balms and Lancôme makeup cases."
   }
 };
 const caseCopy = {
