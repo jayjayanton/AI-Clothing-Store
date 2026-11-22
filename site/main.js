@@ -20,7 +20,7 @@ const translations = {
   "es": {
     "browse": "Colección",
     "how": "Cómo comprar",
-    "intro": "Descubre nuestra selección de ropa de mujer y estuches Lancôme. La colección de hombre llega próximamente.",
+    "intro": "Ropa y accesorios nuevos. De cada diseño tenemos una sola unidad, salvo el estuche Lancôme con ribete rojo, del que hay dos.",
     "headline": "Moda y",
     "accent": "accesorios.",
     "explore": "Explorar la colección",
@@ -32,6 +32,7 @@ const translations = {
     "mensSoon": "Estamos preparando la primera selección de ropa de hombre.",
     "beauty": "Accesorios de belleza",
     "wear": "Ropa de mujer",
+    "garmentStock": "Nueva · 1 disponible",
     "cases": "Estuches de maquillaje",
     "allStyles": "Todas",
     "tees": "Camisetas",
@@ -47,7 +48,7 @@ const translations = {
   "en": {
     "browse": "Collection",
     "how": "How to buy",
-    "intro": "Discover our selection of womenswear and Lancôme makeup cases. Our first menswear collection is on its way.",
+    "intro": "All clothing and accessories are new. We have one of each design, except for the red-trim Lancôme case, of which we have two.",
     "headline": "Clothing &",
     "accent": "accessories.",
     "explore": "Explore the collection",
@@ -59,6 +60,7 @@ const translations = {
     "mensSoon": "Our first selection of menswear is in the works.",
     "beauty": "Beauty accessories",
     "wear": "Women’s clothing",
+    "garmentStock": "New · 1 available",
     "cases": "Makeup cases",
     "allStyles": "All",
     "tees": "T-shirts",
@@ -74,7 +76,7 @@ const translations = {
 };
 const caseCopy = {
   es: {
-    name: 'Estuche de maquillaje Lancôme', condition: 'Nuevo, sin uso',
+    name: 'Estuche de maquillaje Lancôme', condition: 'Nuevo · 1 disponible',
     description: 'Estuche negro de exterior acanalado con asa, cierre y una rosa de tela en el frente. El interior tiene forro rojo y un bolsillo fruncido. Se vende vacío.',
     price: 'US$26', inquiry: 'Solicitar compra',
     photoNote: 'Fotos editadas con IA a partir de las imágenes del estuche.',
@@ -87,7 +89,7 @@ const caseCopy = {
     }
   },
   en: {
-    name: 'Lancôme Makeup Case', condition: 'New, unused',
+    name: 'Lancôme Makeup Case', condition: 'New · 1 available',
     description: 'Black ribbed makeup case with a carrying handle, zip closure and a fabric rose on the front. The red lining has a gathered pocket. Sold empty.',
     price: 'US$26', inquiry: 'Request to buy',
     photoNote: 'Catalog photos edited with AI from photos of this case.',
@@ -102,14 +104,14 @@ const caseCopy = {
 };
 const redTrimCopy = {
   es: {
-    name: 'Estuche Lancôme con ribete rojo',
+    name: 'Estuche Lancôme con ribete rojo', condition: 'Nuevo · 2 disponibles',
     price: 'US$28',
     description: 'Estuche negro con motivos tejidos, ribete rojo y dos tiradores en forma de torre Eiffel. El interior rojo tiene un bolsillo fruncido y una etiqueta que dice «Designed Exclusively For Lancôme».',
     base: 'Base', reverse: 'Reverso',
     alt: {collage: 'Estuche con ribete rojo, tiradores de torre Eiffel y etiqueta interior', front: 'Frente con cierre rojo continuo', top: 'Tapa estampada con asa negra y costuras rojas', interior: 'Forro rojo, bolsillo y etiqueta diseñada para Lancôme', base: 'Base estampada con borde rojo', reverse: 'Reverso con dos tiradores de torre Eiffel'}
   },
   en: {
-    name: 'Lancôme Red-Trim Makeup Case',
+    name: 'Lancôme Red-Trim Makeup Case', condition: 'New · 2 available',
     price: 'US$28',
     description: 'Black patterned case with red piping and two Eiffel Tower zipper pulls. The red lining has a gathered pocket and a label reading “Designed Exclusively For Lancôme”.',
     base: 'Base', reverse: 'Back',
