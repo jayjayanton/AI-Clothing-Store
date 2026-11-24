@@ -44,7 +44,7 @@ const translations = {
     "catalog": "Catálogo",
     "soon": "Próximamente",
     "current": "Ver la colección disponible",
-    "beautyRange": "Splash corporales de Victoria’s Secret, bálsamos labiales y estuches de maquillaje Lancôme."
+    "beautyRange": "Splash corporales de Victoria’s Secret, bálsamos, brillos labiales, maquillaje y estuches Lancôme."
   },
   "en": {
     "browse": "Collection",
@@ -73,7 +73,7 @@ const translations = {
     "catalog": "Catalog",
     "soon": "Coming soon",
     "current": "Browse the current collection",
-    "beautyRange": "Victoria’s Secret body mists, lip balms and Lancôme makeup cases."
+    "beautyRange": "Victoria’s Secret body mists, lip balms, and Lancôme lip glosses, makeup and cases."
   }
 };
 const caseCopy = {
@@ -120,8 +120,80 @@ const redTrimCopy = {
     alt: {collage: 'Red-trim case, Eiffel Tower pulls and interior brand label', front: 'Front with continuous red zipper', top: 'Patterned lid with black handle and red stitching', interior: 'Red lining, pocket and Designed Exclusively For Lancôme label', base: 'Patterned base with red piping', reverse: 'Back with two Eiffel Tower zipper pulls'}
   }
 };
+const cosmeticsCopy = {
+  'lancome-set-maquillaje': {
+    es: {
+      name: 'Set de maquillaje Lancôme de 2 piezas',
+      condition: 'Nuevo, sin uso · 1 set',
+      description: 'Incluye una paleta de cuatro sombras y un dúo para mejillas. Los estuches tienen leves marcas superficiales. La paleta de sombras se entrega sin brocha ni aplicador. El precio ya refleja ese detalle.',
+      price: 'US$35',
+      photoNote: 'Galería editada con IA a partir de fotos del set. El detalle original muestra el compartimento sin aplicador.',
+      collage: 'Set abierto', front: 'Estuches cerrados', angle: 'Vista en ángulo', original: 'Detalle original',
+      alt: {
+        collage: 'Ambos compactos Lancôme abiertos con cuatro sombras y dos tonos para mejillas',
+        front: 'Dos compactos Lancôme negros cerrados con el emblema de la rosa',
+        angle: 'Vista en ángulo de los dos compactos abiertos',
+        original: 'Foto original de las cuatro sombras y el compartimento vacío del aplicador'
+      }
+    },
+    en: {
+      name: 'Lancôme 2-Piece Makeup Set',
+      condition: 'New, unused · 1 set',
+      description: 'Includes a four-shade eyeshadow palette and a cheek duo. The cases have minor surface marks. The eyeshadow palette comes without a brush or applicator, and the price reflects that.',
+      price: 'US$35',
+      photoNote: 'Gallery images edited with AI from photos of this set. The original close-up shows the empty applicator slot.',
+      collage: 'Open set', front: 'Closed cases', angle: 'Angled view', original: 'Original close-up',
+      alt: {
+        collage: 'Both Lancôme compacts open, showing four eyeshadows and two cheek shades',
+        front: 'Two closed black Lancôme compacts showing the rose emblem',
+        angle: 'Angled view of both open compacts',
+        original: 'Original photo of four eyeshadows and the empty applicator compartment'
+      }
+    }
+  },
+  'lancome-juicy-tubes': {
+    es: {
+      name: 'Dúo de brillos labiales Lancôme Juicy Tubes',
+      condition: 'Nuevos, sin uso · 1 dúo',
+      description: 'Dos brillos labiales de 15 mL cada uno. Bolole es un rojo con destellos y Hallucination es un nude durazno con destellos. Precio por el dúo.',
+      price: 'US$25',
+      photoNote: 'Fotos de frente editadas con IA a partir de las fotos de los tubos. Las etiquetas se muestran en fotos originales recortadas.',
+      collage: 'Ambos tonos', bolole: 'Bolole', hallucination: 'Hallucination',
+      'bolole-label': 'Etiqueta Bolole', 'hallucination-label': 'Etiqueta Hallucination',
+      alt: {
+        collage: 'Frente de los dos brillos Lancôme Juicy Tubes: Bolole rojo y Hallucination nude durazno',
+        bolole: 'Vista frontal del brillo labial Bolole en rojo con destellos',
+        hallucination: 'Vista frontal del brillo labial Hallucination en nude durazno con destellos',
+        'bolole-label': 'Foto original de la etiqueta Bolole de 15 mL',
+        'hallucination-label': 'Foto original de la etiqueta Hallucination de 15 mL'
+      }
+    },
+    en: {
+      name: 'Lancôme Juicy Tubes Lip Gloss Duo',
+      condition: 'New, unused · 1 duo',
+      description: 'Two 15 mL lip glosses. Bolole is a shimmery red and Hallucination is a shimmery peach nude. Price is for both tubes.',
+      price: 'US$25',
+      photoNote: 'Front views edited with AI from photos of these tubes. The label photos are cropped originals.',
+      collage: 'Both shades', bolole: 'Bolole', hallucination: 'Hallucination',
+      'bolole-label': 'Bolole label', 'hallucination-label': 'Hallucination label',
+      alt: {
+        collage: 'Front view of both Lancôme Juicy Tubes glosses, red Bolole and peach-nude Hallucination',
+        bolole: 'Front view of shimmery red Bolole lip gloss',
+        hallucination: 'Front view of shimmery peach-nude Hallucination lip gloss',
+        'bolole-label': 'Original photo of the 15 mL Bolole label',
+        'hallucination-label': 'Original photo of the 15 mL Hallucination label'
+      }
+    }
+  }
+};
+const cosmeticsSharedCopy = {
+  es: {views: 'Fotos del producto', inquiry: 'Consultar disponibilidad', shelfLife: 'Vigencia por verificar antes de la compra.'},
+  en: {views: 'Product photos', inquiry: 'Ask about availability', shelfLife: 'Shelf life to be verified before purchase.'}
+};
 const caseSections = document.querySelectorAll('.beauty-product');
 function galleryCopy(section, language) {
+  const cosmetics = cosmeticsCopy[section.id];
+  if (cosmetics) return {...cosmeticsSharedCopy[language], ...cosmetics[language]};
   return section.id === 'lancome-ribete-rojo' ? {...caseCopy[language], ...redTrimCopy[language]} : caseCopy[language];
 }
 function translateCase(language) {

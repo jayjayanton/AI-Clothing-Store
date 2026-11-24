@@ -37,13 +37,20 @@ const purchaseConfig={sellerWhatsApp:'',sellerEmail:''}; // Set these only when 
 function openPurchaseRequest(product){
  const item=[product.brand,product.name,product.size && 'Size '+product.size,product.color].filter(Boolean).join(' · ');
  const itemType=product.size?'esta prenda':'este artículo';
- const message='Hola, quisiera comprar '+itemType+': '+item+'. ¿Sigue disponible? Por favor confirme el precio total y envíeme un enlace de pago seguro de PayPhone. Gracias.';
+ const spanish=document.documentElement.lang==='es';
+ const message=product.confirmShelfLife
+   ? (spanish
+     ? 'Hola, me interesa: '+item+'. ¿Podrían confirmar la disponibilidad y la vigencia del producto? Gracias.'
+     : 'Hello, I’m interested in '+item+'. Could you confirm availability and whether the product is still within its shelf life? Thank you.')
+   : 'Hola, quisiera comprar '+itemType+': '+item+'. ¿Sigue disponible? Por favor confirme el precio total y envíeme un enlace de pago seguro de PayPhone. Gracias.';
  let dialog=document.querySelector('#purchase-request-dialog');
  if(!dialog){dialog=document.createElement('dialog');dialog.id='purchase-request-dialog';dialog.className='purchase-dialog';document.body.append(dialog)}
  dialog.replaceChildren();
- const title=document.createElement('h2');title.textContent='Solicitar compra / Request to buy';
+ const title=document.createElement('h2');title.textContent=product.confirmShelfLife ? 'Consultar disponibilidad / Ask about availability' : 'Solicitar compra / Request to buy';
  const detail=document.createElement('p');detail.textContent=item;
- const note=document.createElement('p');note.textContent='Esta solicitud no es un pago ni reserva. Confirmaremos precio y disponibilidad antes de enviar un enlace seguro de PayPhone. No ingreses datos de tarjeta aquí.';
+ const note=document.createElement('p');note.textContent=product.confirmShelfLife
+   ? (spanish ? 'Consulta con la tienda la vigencia del cosmético antes de comprar.' : 'Check the product’s shelf life with the shop before purchasing.')
+   : 'Esta solicitud no es un pago ni reserva. Confirmaremos precio y disponibilidad antes de enviar un enlace seguro de PayPhone. No ingreses datos de tarjeta aquí.';
  const textarea=document.createElement('textarea');textarea.value=message;textarea.rows=5;textarea.setAttribute('aria-label','Mensaje de solicitud');
  const actions=document.createElement('div');actions.className='purchase-actions';
  const copy=document.createElement('button');copy.type='button';copy.textContent='Copiar solicitud / Copy request';copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(textarea.value);copy.textContent='Copiado / Copied'}catch{textarea.focus();textarea.select();copy.textContent='Selecciona y copia el texto'}});actions.append(copy);
@@ -53,8 +60,11 @@ function openPurchaseRequest(product){
  dialog.append(title,detail,note,textarea,actions);dialog.showModal();
 }
 
-document.querySelectorAll('.beauty-product').forEach(section => {
-  section.querySelector('.women-inquiry').addEventListener('click', () => {
-    openPurchaseRequest({name: section.querySelector('h2').textContent});
+document.querySelectorAll('.beauty-product .women-inquiry').forEach(button => {
+  button.addEventListener('click', () => {
+    openPurchaseRequest({
+      name: button.closest('.beauty-product').querySelector('h2').textContent,
+      confirmShelfLife: button.hasAttribute('data-confirm-shelf-life')
+    });
   });
 });
