@@ -8,28 +8,61 @@ const labels=['Collage','Front / Frente','Back / Espalda','Side / Lado'];
 const drive=id=>'https://drive.google.com/file/d/'+id+'/view';
 const thumb=id=>'https://drive.google.com/thumbnail?id='+id+'&sz=w1000';
 const localPath=name=>assetFolder+encodeURIComponent(name);
-const imageFiles=new Map();
+const imageFiles = new Map();
+const thumbnailPrefixes = new Set(womensProducts.map(product => product.filePrefix));
+for (const product of womensProducts) {
+  for (const view of views) {
+    const suffix = view === 'front' && product.brand === 'Papaya' ? '_corrected' : '';
+    const filename = `${product.filePrefix}_${view}${suffix}.png`;
+    imageFiles.set(filename.toLowerCase(), filename);
+  }
+}
 const categoryFor=prefix=>/skirt|falda/.test(prefix)?'skirts':/tshirt|t_shirt|camiseta/.test(prefix)?'tshirts':/dress|vestido/.test(prefix)?'dresses':/pants|pantalon/.test(prefix)?'pants':'tops';
-function resolveImage(p,i){const name=p.filePrefix+'_'+views[i]+'.png';const alternate=p.filePrefix+'_'+views[i]+'_corrected.png';if(imageFiles.has(name.toLowerCase())||imageFiles.has(alternate.toLowerCase())){const actual=imageFiles.get(name.toLowerCase())||imageFiles.get(alternate.toLowerCase());return {src:localPath(actual),href:localPath(actual),local:true}}if(p.filePrefix==='papaya_peplum_top_coral_red_S'&&i===3){const path=localPath('papaya_side_placeholder.svg');return {src:path,href:path,local:true,placeholder:true}}const id=p.ids?.[i];return id?{src:thumb(id),href:drive(id),local:false}:null}
+function resolveImage(product, index) {
+  const view = views[index];
+  const prefix = `${product.filePrefix}_${view}`;
+  const filename = imageFiles.get(`${prefix}.png`.toLowerCase())
+    || imageFiles.get(`${prefix}_corrected.png`.toLowerCase());
+  if (filename) {
+    const original = localPath(filename);
+    const src = view === 'front' && thumbnailPrefixes.has(product.filePrefix) ? localPath(`${prefix}.webp`) : original;
+    return {src, href: original};
+  }
+  const id = product.ids?.[index];
+  return id ? {src: thumb(id), href: drive(id)} : null;
+}
 function addDiscoveredProducts(){const known=new Set(womensProducts.map(p=>p.filePrefix.toLowerCase()));const groups=new Map();for(const name of imageFiles.values()){const match=name.match(/^(.+)_(collage|front|back|side)\.png$/i);if(!match)continue;const prefix=match[1];if(!groups.has(prefix))groups.set(prefix,new Set());groups.get(prefix).add(match[2].toLowerCase())}
  for(const [prefix,available] of groups){if(known.has(prefix.toLowerCase())||!available.has('collage'))continue;const parts=prefix.split('_');const size=parts[parts.length-1].toUpperCase();const category=categoryFor(prefix);const title=parts.slice(0,-1).join(' ').replace(/\b\w/g,c=>c.toUpperCase());womensProducts.push({name:title,brand:parts[0].toUpperCase(),category,size,color:'',filePrefix:prefix,ids:[]})}}
 const grid=document.querySelector('#women-product-grid');let currentFilter='all';
 function renderWomen(){if(!grid)return;grid.replaceChildren();for(const p of womensProducts.filter(p=>currentFilter==='all'||p.category===currentFilter)){
  const card=document.createElement('article');card.className='women-card';card.dataset.category=p.category;
  const photo=document.createElement('a');photo.className='women-photo';photo.target='_blank';photo.rel='noopener noreferrer';const img=document.createElement('img');img.loading='lazy';photo.append(img);
+ const stage=document.createElement('div');stage.className='women-stage';
  const info=document.createElement('div');info.className='women-info';const h=document.createElement('h3');h.textContent=p.name;const meta=document.createElement('p');meta.textContent=[p.brand,'Size '+p.size,p.color].filter(Boolean).join(' · ');const price=document.createElement('p');price.className='women-price';price.textContent=p.price == null ? 'Precio por confirmar / Price pending' : 'US$'+p.price;const stock=document.createElement('p');
  stock.dataset.text='garmentStock';
  stock.textContent=translations[document.documentElement.lang].garmentStock;
- info.append(h,meta,stock,price);const inquiry=document.createElement('button');inquiry.type='button';inquiry.className='women-inquiry';inquiry.textContent='Solicitar compra / Request to buy';inquiry.addEventListener('click',()=>openPurchaseRequest(p));info.append(inquiry);
- const gallery=document.createElement('div');gallery.className='women-gallery';const available=views.map((v,i)=>resolveImage(p,i));let selected=available.findIndex(Boolean);if(selected<0)continue;
+ info.append(h,meta,price,stock);const inquiry=document.createElement('button');inquiry.type='button';inquiry.className='women-inquiry';inquiry.textContent='Solicitar compra / Request to buy';inquiry.addEventListener('click',()=>openPurchaseRequest(p));info.append(inquiry);
+ const gallery=document.createElement('div');gallery.className='women-gallery';const available=views.map((v,i)=>resolveImage(p,i));let selected=available[1] ? 1 : available.findIndex(Boolean);if(selected<0)continue;
  const buttons=views.map((v,i)=>{const b=document.createElement('button');b.type='button';b.textContent=labels[i];b.disabled=!available[i];b.addEventListener('click',()=>{selected=i;update()});gallery.append(b);return b});
- const update=()=>{const item=available[selected];if(!item)return;img.style.display='block';img.src=item.src;img.alt=p.name+' — '+labels[selected]+(item.placeholder?' (placeholder; photo coming soon)':'');photo.href=item.href;photo.setAttribute('aria-label','Open '+labels[selected]);buttons.forEach((b,i)=>{b.classList.toggle('active',i===selected);b.setAttribute('aria-pressed',String(i===selected))})};
- img.onerror=()=>{const id=available[selected]?.placeholder?null:p.ids?.[selected];if(id&&img.src!==thumb(id)){img.src=thumb(id);photo.href=drive(id)}else{img.style.display='none';photo.textContent='Image unavailable'}};
+ const update=()=>{const item=available[selected];if(!item)return;img.style.display='block';img.src=item.src;img.alt=p.name+' — '+labels[selected];photo.href=item.href;photo.setAttribute('aria-label','Open '+labels[selected]);buttons.forEach((b,i)=>{b.classList.toggle('active',i===selected);b.setAttribute('aria-pressed',String(i===selected))})};
+ img.onerror = () => {
+   const item = available[selected];
+   const original = new URL(item.href, document.baseURI).href;
+   const id = p.ids?.[selected];
+   if (item.src.endsWith('.webp') && img.src !== original && (!id || img.src !== thumb(id))) {
+     img.src = item.href;
+   } else if (id && img.src !== thumb(id)) {
+     img.src = thumb(id);
+     photo.href = drive(id);
+   } else {
+     img.style.display = 'none';
+   }
+ };
  const controls=document.createElement('div');controls.className='women-slide-controls';for(const [label,delta] of [['‹',-1],['›',1]]){const b=document.createElement('button');b.type='button';b.textContent=label;b.setAttribute('aria-label',delta<0?'Previous image':'Next image');b.addEventListener('click',()=>{let i=selected;do{i=(i+delta+4)%4}while(!available[i]&&i!==selected);selected=i;update()});controls.append(b)}
- card.append(photo,controls);info.append(gallery);card.append(info);grid.append(card);update();}}
-document.querySelectorAll('[data-women-filter]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-women-filter]').forEach(x=>x.classList.toggle('active',x===b));currentFilter=b.dataset.womenFilter;renderWomen()}));
+ stage.append(photo,controls);card.append(stage,gallery,info);grid.append(card);update();}}
+document.querySelectorAll('[data-women-filter]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-women-filter]').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-pressed',String(x===b))});currentFilter=b.dataset.womenFilter;renderWomen()}));
 renderWomen();
-fetch(apiUrl,{headers:{Accept:'application/vnd.github+json'}}).then(r=>{if(!r.ok)throw new Error('GitHub folder listing unavailable');return r.json()}).then(files=>{for(const f of files){if(f.type==='file'&&f.name.toLowerCase().endsWith('.png'))imageFiles.set(f.name.toLowerCase(),f.name)}addDiscoveredProducts();renderWomen()}).catch(e=>console.warn('Using catalog fallbacks:',e.message));
+fetch(apiUrl,{headers:{Accept:'application/vnd.github+json'}}).then(r=>{if(!r.ok)throw new Error('GitHub folder listing unavailable');return r.json()}).then(files=>{for(const f of files){if(f.type==='file'&&f.name.toLowerCase().endsWith('.png'))imageFiles.set(f.name.toLowerCase(),f.name)}const count=womensProducts.length;addDiscoveredProducts();if(womensProducts.length!==count)renderWomen()}).catch(e=>console.warn('Using catalog fallbacks:',e.message));
 
 // One-off garment purchase requests. No card data or payment credentials on GitHub Pages.
 // The seller confirms availability and sends a PayPhone payment link manually.
@@ -63,7 +96,7 @@ function openPurchaseRequest(product){
 document.querySelectorAll('.beauty-product .women-inquiry').forEach(button => {
   button.addEventListener('click', () => {
     openPurchaseRequest({
-      name: button.closest('.beauty-product').querySelector('h2').textContent,
+      name: button.closest('.beauty-product').querySelector('[data-case-copy="name"]').textContent,
       confirmShelfLife: button.hasAttribute('data-confirm-shelf-life')
     });
   });

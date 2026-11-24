@@ -1,30 +1,50 @@
 const filters = document.querySelectorAll('[data-filter]');
-filters.forEach(button => button.addEventListener('click', () => {
-  filters.forEach(item => {
-    item.classList.toggle('active', item === button);
-    item.setAttribute('aria-pressed', String(item === button));
+const departments = document.querySelectorAll('#collection > [data-category]');
+const departmentTargets = {all: '#collection', clothing: '#womens-clothing', beauty: '#beauty', men: '#mens-clothing'};
+
+function showDepartment(category) {
+  for (const button of filters) {
+    const active = button.dataset.filter === category;
+    button.classList.toggle('active', active);
+    button.setAttribute('aria-pressed', String(active));
+  }
+  for (const department of departments) {
+    department.hidden = category !== 'all' && department.dataset.category !== category;
+  }
+}
+
+for (const button of filters) {
+  button.addEventListener('click', () => {
+    const category = button.dataset.filter;
+    showDepartment(category);
+    const target = document.querySelector(departmentTargets[category]);
+    target.focus({preventScroll: true});
+    target.scrollIntoView();
   });
-  document.querySelectorAll('#collection > [data-category]').forEach(section => {
-    section.hidden = button.dataset.filter !== 'all' && section.dataset.category !== button.dataset.filter;
-  });
-}));
-document.querySelector('#mens-nav').addEventListener('click', () => {
-  document.querySelector('[data-filter="men"]').click();
+}
+document.querySelectorAll('[data-department]').forEach(link => {
+  link.addEventListener('click', () => showDepartment(link.dataset.department));
 });
-document.querySelector('#current-collection').addEventListener('click', () => {
-  const all = document.querySelector('[data-filter="all"]');
-  all.click();
-  all.focus({preventScroll: true});
+document.querySelector('#current-collection').addEventListener('click', () => showDepartment('all'));
+window.addEventListener('hashchange', () => {
+  const target = document.getElementById(window.location.hash.slice(1));
+  const department = target?.closest('#collection > [data-category]');
+  if (department?.hidden) {
+    showDepartment(department.dataset.category);
+    target.scrollIntoView();
+  }
 });
+
 const translations = {
   "es": {
-    "browse": "Colección",
+    "skip": "Ir al catálogo",
+    "shopWomen": "Ver ropa de mujer",
+    "shopBeauty": "Ver belleza",
     "how": "Cómo comprar",
-    "intro": "Moda, fragancias y accesorios nuevos. Hay una unidad de cada artículo, salvo el estuche Lancôme con ribete rojo, del que tenemos dos.",
+    "intro": "Ropa, maquillaje y accesorios en Quito. Consulta la disponibilidad de cada pieza en el catálogo.",
     "headline": "Moda y",
     "accent": "belleza.",
     "explore": "Explorar la colección",
-    "feature": "Top de lentejuelas 2b bebe y estuche Lancôme",
     "all": "Todo",
     "clothing": "Mujer",
     "men": "Hombre",
@@ -36,24 +56,24 @@ const translations = {
     "cases": "Belleza y accesorios",
     "allStyles": "Todas",
     "tees": "Camisetas",
+    "tops": "Tops",
     "skirts": "Faldas",
     "note": "Fotografías de catálogo editadas con IA a partir de las prendas originales.",
     "howText": "Abre la pieza que te interesa y selecciona «Solicitar compra». Copia la solicitud para compartirla con la tienda. El precio final y la disponibilidad se confirman antes del pago.",
     "back": "Volver a la colección",
     "importer": "Importador de imágenes",
-    "catalog": "Catálogo",
     "soon": "Próximamente",
-    "current": "Ver la colección disponible",
-    "beautyRange": "Splash corporales de Victoria’s Secret, bálsamos, brillos labiales, maquillaje y estuches Lancôme."
+    "current": "Ver la colección disponible"
   },
   "en": {
-    "browse": "Collection",
+    "skip": "Skip to catalog",
+    "shopWomen": "Shop women",
+    "shopBeauty": "Shop beauty",
     "how": "How to buy",
-    "intro": "New clothing, fragrance and accessories. Each item is available as a single piece, except for the red-trim Lancôme case. We have two.",
+    "intro": "Clothing, makeup and accessories in Quito. Check each listing for availability.",
     "headline": "Fashion &",
     "accent": "beauty.",
     "explore": "Explore the collection",
-    "feature": "2b bebe sequin top and Lancôme makeup case",
     "all": "All",
     "clothing": "Women",
     "men": "Men",
@@ -65,15 +85,14 @@ const translations = {
     "cases": "Beauty & accessories",
     "allStyles": "All",
     "tees": "T-shirts",
+    "tops": "Tops",
     "skirts": "Skirts",
     "note": "Catalog photos edited with AI from photographs of the garments.",
     "howText": "Open an item and select “Request to buy.” Copy the request to share it with the shop. Final price and availability are confirmed before payment.",
     "back": "Back to collection",
     "importer": "Image importer",
-    "catalog": "Catalog",
     "soon": "Coming soon",
-    "current": "Browse the current collection",
-    "beautyRange": "Victoria’s Secret body mists, lip balms, and Lancôme lip glosses, makeup and cases."
+    "current": "Browse the current collection"
   }
 };
 const caseCopy = {
@@ -273,7 +292,7 @@ for (const section of caseSections) {
     link.setAttribute('aria-current', 'true');
   }));
 }
-function setLanguage(lang){translateCase(lang);document.querySelectorAll('[data-text]').forEach(el => { el.textContent = translations[lang][el.dataset.text]; });
+function setLanguage(lang){translateCase(lang);document.querySelector(".departments").setAttribute("aria-label",lang==="es"?"Departamentos":"Departments");document.querySelector(".women-filters").setAttribute("aria-label",lang==="es"?"Filtrar ropa de mujer":"Filter women’s clothing");document.querySelectorAll('[data-text]').forEach(el => { el.textContent = translations[lang][el.dataset.text]; });
 document.title = 'Trama & Charol | ' + (lang === 'es' ? 'Moda y belleza' : 'Fashion & Beauty');
 document.documentElement.lang=lang;document.querySelector('#language-toggle').textContent=lang==='es'?'EN':'ES';document.querySelector('#language-toggle').setAttribute('aria-label',lang==='es'?'Switch language to English':'Cambiar idioma a español');try{localStorage.setItem('store-language',lang)}catch{}}
 let lang='es';try{lang=localStorage.getItem('store-language')||'es'}catch{}if(!translations[lang])lang='es';setLanguage(lang);document.querySelector('#language-toggle').addEventListener('click',()=>{lang=lang==='es'?'en':'es';setLanguage(lang)});
