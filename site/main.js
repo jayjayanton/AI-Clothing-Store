@@ -151,6 +151,36 @@ const cosmeticsCopy = {
       }
     }
   },
+  'lancome-color-design': {
+    es: {
+      name: 'Labiales Lancôme Color Design',
+      condition: 'Estuches en muy buen estado · 1 por tono',
+      description: 'Debut, Sugared Maple y Visionary, todos con acabado Sheen. Los estuches presentan leve desgaste en las etiquetas de la base. Son piezas de un set promocional.',
+      price: 'US$25 c/u',
+      photoNote: 'Foto grupal editada con IA. Las etiquetas se muestran en fotos originales recortadas.',
+      trio: 'Los tres tonos', debut: 'Debut', 'sugared-maple': 'Sugared Maple', visionary: 'Visionary',
+      alt: {
+        trio: 'Tres labiales Lancôme Color Design en estuches negros con una rosa en relieve',
+        debut: 'Foto original de la etiqueta del labial Debut, acabado Sheen',
+        'sugared-maple': 'Foto original de la etiqueta del labial Sugared Maple, acabado Sheen',
+        visionary: 'Foto original de la etiqueta del labial Visionary, acabado Sheen'
+      }
+    },
+    en: {
+      name: 'Lancôme Color Design Lipsticks',
+      condition: 'Cases in very good condition · 1 per shade',
+      description: 'Debut, Sugared Maple, and Visionary, all with a Sheen finish. The labels on the bottom show slight wear. These pieces came from a promotional set.',
+      price: 'US$25 each',
+      photoNote: 'Group photo edited with AI. The label photos are cropped originals.',
+      trio: 'All three shades', debut: 'Debut', 'sugared-maple': 'Sugared Maple', visionary: 'Visionary',
+      alt: {
+        trio: 'Three Lancôme Color Design lipsticks in black cases with an embossed rose',
+        debut: 'Original label photo for Debut lipstick in a Sheen finish',
+        'sugared-maple': 'Original label photo for Sugared Maple lipstick in a Sheen finish',
+        visionary: 'Original label photo for Visionary lipstick in a Sheen finish'
+      }
+    }
+  },
   'lancome-juicy-tubes': {
     es: {
       name: 'Dúo de brillos labiales Lancôme Juicy Tubes',
